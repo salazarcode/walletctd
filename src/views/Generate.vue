@@ -18,14 +18,14 @@
         </div>
         <button style="margin-top: 30px;" class="btn" @click="copyToClipboard('Seed: ' + seed + '\nPrivate Key: ' + privatekey + '\nPublic Key: ' + publickey + '\nAddress: ' + address)">Copy To Clipboard</button>
         <button class="btn outline" @click="save('Seed: ' + seed + '\nPrivate Key: ' + privatekey + '\nPublic Key: ' + publickey + '\nAddress: ' + address)">Download</button>
-        <wallet :private="seed" :public="address"></wallet>
+        <!-- <wallet :private="seed" :public="address"></wallet>
         <div class="details smaller padtop">
           <label for="phrase">EXPERIMENTAL PhraseFile <a @click="openPhrasefilegen"><i class="fal fa-exclamation-circle"></i></a></label>
           <input class="copytext" type="text" v-model="phrase" name="phrase" />
           <label for="fileupload" class="btn outline">{{ filebutton }}</label>
           <input type="file" id="fileupload" @change="filebuttonchange" style="display:none;" />
           <button @click="seedfromphrase" class="btn outline" >PhraseFile Generate</button>
-        </div>
+        </div> -->
       </div>
       <div class="page" style="z-index: 9;" :class="{active: aboutphrasegen !== false}">
         <a class="close" @click="closePhrasefilegen"><i class="fal fa-times"></i></a>
@@ -37,14 +37,14 @@
 <script>
 import { serverMixin } from '../mixins/serverMixin.js'
 // import QrBlock from '../components/QrBlock'
-import Wallet from '../components/Wallet'
+//import Wallet from '../components/Wallet'
 
 export default {
   name: 'Generate',
   mixins: [ serverMixin ],
   components: {
     // QrBlock,
-    Wallet
+    //Wallet
   },
   data() {
     return {

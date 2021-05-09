@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import "@/assets/css/style.scss";
 
 // import { NanoCurrency } from 'nanocurrency'
 import Notifications from 'vue-notification'

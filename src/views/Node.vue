@@ -5,33 +5,10 @@
         <label @click="setNormal" class="df" :class="{ active: showadvanced !== true}">
           Enter Node Address
         </label>
-        <label @click="setAdvanced" class="df" :class="{ active: showadvanced === true}">
-          Advanced
-        </label>
       </div>
       <input v-if="showadvanced === false" v-model="node" type="text" id="node" name="node">
-      <input v-if="showadvanced === true" v-model="address" placeholder="https://domain.com:443/path" type="text" id="address" name="address">
-      <input v-if="showadvanced === true" v-model="auth" placeholder="Auth Header *optional" type="text" id="auth" name="auth">
-      <select v-if="showadvanced === true" v-model="nodetype">
-        <option value="nano">Nano Node</option>
-        <option value="banano">Banano Node</option>
-      </select>
       <button v-if="showadvanced === false" @click="openNode" class="openwallet btn" type="button">Go To Node</button>
-      <button v-if="showadvanced === false" @click="openLocalhost" class="openwallet btn" type="button">Local Node</button>
-      <button v-if="showadvanced === true" @click="openAdvanced" class="openwallet btn" type="button">Go To Node</button>
     </div>
-    <p style="margin-top: 5px;">This wallet is designed to use any Nano Node RPC server as a backend (presets below). Using nano.linuxserver.io will plug you into the LSIO network. More information including how to get funds from a faucet is available on <a class="highlight" target="_blank" href="https://github.com/linuxserver/nano-wallet/">GitHub</a>.</p>
-    <div class="presets">
-      <center>
-        <button @click="openPreset('app.natrium.io')" class="outline btn" type="button">Natrium</button>
-        <button @click="openPreset('kaliumapi.appditto.com')" class="outline btn yellow" type="button">Banano</button>
-        <button @click="openPreset('proxy.nanos.cc')" class="outline btn" type="button">Nanos.cc</button>
-        <button @click="openPreset('api.nanex.cc')" class="outline btn" type="button">Nanex.cc</button>
-        <button @click="openPreset('vault.nanocrawler.cc')" class="outline btn" type="button">Nano Crawler</button>
-        <button @click="openPreset('mynano.ninja')" class="outline btn" type="button">My Nano Ninja</button>
-      </center>
-    </div>
-    <p><a class="highlight" target="_blank" href="https://github.com/linuxserver/nano-wallet/"><i class="fab fa-2x fa-github"></i></a></p>
   </div>
 </template>
 
@@ -44,7 +21,7 @@ export default {
   },
   data() {
     return {
-      node: 'nano.linuxserver.io',
+      node: 'andresalteclado.com',
       address: '',
       auth: '',
       nodetype: 'nano',

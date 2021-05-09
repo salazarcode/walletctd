@@ -1,32 +1,98 @@
 <template>
-  <div class="transaction" :class="type">
+  <!-- <div class="transaction" :class="type">
     <div class="type icon" :value="hash" @click="$emit('blockdetails', hash)">
       <i v-if="type === 'send'" class="fal fa-minus-circle"></i>
       <i v-else-if="type === 'pending'" class="fal fa-exclamation-circle"></i>
       <i v-else class="fal fa-plus-circle"></i>
     </div>
+
     <div class="innerdetails">
       <div class="amount">
         <div :title="rawValue" class="value" v-html="formattedValue"><i class="fal fa-coin"></i>
         </div>
+
         <div v-if="type !== 'pending'" class="type">{{ transactionStatus(transaction.type) }}</div>
+
         <div v-if="type === 'pending'" class="type">
           <button v-if="privatekey !== null" @click="receive" class="pocket">Click to Receive</button>
           <div v-else class="">Delivered</div>
         </div>
       </div>
+
       <div class="address">
         <span @click="link('address',transaction.account)" v-if="type !== 'pending'" v-html="abbreviateAddress(transaction.account) + ' ' + formattedDate"></span>
         <span @click="link('address',transaction.source)" v-if="type === 'pending'" v-html="abbreviateAddress(transaction.source)"></span>
       </div>
     </div>
+  </div> -->
+
+<div class="notification is-dark">
+  <div class="columns level">
+      <div class="column is-2">
+          <div v-if="type === 'send'" class="icon has-text-link">
+            <div v-html="iconSvg('minus-square')"></div> 
+          </div>
+
+          <div v-else-if="type === 'pending'" class="icon has-text-link">
+            <div v-html="iconSvg('alert-triagle')"></div> 
+          </div>
+          
+          <div v-else class="icon has-text-link">
+            <div v-html="iconSvg('plus-square')"></div> 
+          </div>
+      </div>
+
+      <div class="column is-6">
+          <div class="is-size-7 has-text-weight-bold">{{formattedValue}}
+          </div>
+
+          <div 
+            class="is-size-7" 
+            @click="link('address',transaction.account)" 
+            v-if="type !== 'pending'"
+          >
+            {{abbreviateAddress(transaction.account)}}
+          </div>
+
+          <div 
+            class="is-size-7" 
+            @click="link('address',transaction.source)" 
+            v-if="type === 'pending'" 
+          >
+            {{abbreviateAddress(transaction.source)}}
+          </div>
+
+          <div 
+            v-if="type === 'pending'" 
+            class="type">
+
+            <button 
+              v-if="privatekey !== null" 
+              @click="receive" 
+              class="pocket">
+              Click to Receive
+            </button>
+
+            <div v-else class="">Delivered</div>
+          </div>
+      </div>
+      
+      <div class="column is-5">
+          <div class="is-size-7 has-text-link has-text-weight-bold" v-if="type !== 'pending'">
+            {{ transactionStatus(transaction.type) }}
+          </div>
+          <div class="is-size-7">{{formattedDate}}
+          </div>
+      </div>
   </div>
+</div>
 </template>
 
 <script>
 import * as NanoCurrency from '@thelamer/nanocurrency'
 import { serverMixin } from '../mixins/serverMixin.js'
 import BigNumber from 'bignumber.js'
+import feather from 'feather-icons'
 
 export default {
   name: 'Transaction',
@@ -67,7 +133,10 @@ export default {
     }
 
   },
-  methods: {
+  methods: {    
+    iconSvg: function (icon) {
+      return feather.icons[icon].toSvg();
+    },
     async receive () {
       if(this.pow === null) {
         this.$notify({

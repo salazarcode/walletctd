@@ -5,12 +5,18 @@ import Block from '../views/Block.vue'
 import Node from '../views/Node.vue'
 import Generate from '../views/Generate.vue'
 import Address from '../views/Address.vue'
+import Login from '../views/Login.vue'
 
 Vue.use(VueRouter)
 
   const routes = [
   {
     path: '/',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/home',
     name: 'Home',
     component: Home
   },
@@ -48,13 +54,13 @@ Vue.use(VueRouter)
     component: Home
   },
 
+  // {
+  //   path: '/:node',
+  //   name: 'Home',
+  //   component: Home
+  // },
   {
-    path: '/:node',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/:node/generate',
+    path: '/generate',
     name: 'Generate',
     component: Generate
   },
@@ -64,12 +70,12 @@ Vue.use(VueRouter)
     component: Block
   },
   {
-    path: '/:node/address/:address',
+    path: '/address/:address',
     name: 'Address',
     component: Address
   },
   {
-    path: '/:node/pos/:address',
+    path: '/pos/:address',
     name: 'POS',
     component: Home
   }

@@ -81,10 +81,11 @@ export function initialState () {
     history: [],
     pending: [],
     node: {
-      address: null,
-      port: null,
+      address: "andresalteclado.com",
+      port: "7076",
       path: '',
-      auth: null
+      auth: null,
+      protocol: "http"
     },
     prefixparams: 'useNanoPrefix'
   }

@@ -14,9 +14,6 @@ export function ready(state, data) {
 export function privatekey(state, data) {
   state.privatekey = data
 }
-export function node(state, data) {
-  state.node = data
-}
 export function history(state, data) {
   state.history = data
 }

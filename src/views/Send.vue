@@ -348,6 +348,7 @@ export default {
   height: 100%;
   max-width: 800px;
   padding-bottom: 100px;
+  background-color:white;
   @media all and (min-width: 1040px) {
     padding-bottom: 0;
   }

@@ -89,9 +89,9 @@ export const serverMixin = {
     
     abbreviateAddress (address, formatting = true) {
       let output = ''
-      if (formatting === true) output += '<span class="abbreviate">'
+      if (formatting === true) output += ''
       output += address.substring(0, 11) + '...' + address.slice(address.length - 6)
-      if (formatting === true) output += '</span>'
+      if (formatting === true) output += ''
       return output
     },
 

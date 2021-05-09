@@ -1,63 +1,155 @@
 <template>
-  <div class="wallet">
-    <div type="hidden" id="workstorage"></div>
-      <div id="login" class="page" :class="{ active: open===false }">
-        <div class="title rpc">RPC Server : <span>{{ $store.state.app.node.address }}</span></div>
-        <div id="inputs">
-          <div v-if="error !== null" class="error">{{ error }}</div>
-          <div class="labeltabs">
-          <label @click="setSeed" class="df" :class="{ active: seedtab === true}" for="seed">
-            Seed
-            </label>
-          <label @click="setPrivate" class="df" :class="{ active: seedtab !== true}" for="key">
-            Private Key
-            </label>
-            <a v-if="seedtab === true" class="morebutton mla" href="" @click.prevent="showadvanced = !showadvanced"><i data-fa-transform="grow-20" class="fal fa-ellipsis-h"></i></a>
-
-            </div>
-          <div v-if="seedtab === true" class="login">
-            <input v-model="seed" :type="logintype" placeholder="Seed" id="seed" name="seed">
-            <span class="eye" @click="togglevisibility">
-              <span :class="{ active: logintype === 'password'}"><i class="far fa-eye"></i></span>
-              <span :class="{ active: logintype === 'text'}"><i class="far fa-eye-slash"></i></span>
-            </span>
-          </div>
-            <div v-if="seedtab === false" class="login">
-              <input v-model="key" :type="logintype" placeholder="Private key" id="key" name="key">
-              <span class="eye" @click="togglevisibility">
-                <span :class="{ active: logintype === 'password'}"><i class="far fa-eye"></i></span>
-                <span :class="{ active: logintype === 'text'}"><i class="far fa-eye-slash"></i></span>
-              </span>
-            </div>
-
-          <div v-if="showadvanced === true">
-            <label for="seedindex">Seed Index</label>
-            <div class="login">
-              <input v-model="seedindex" :type="logintype" id="seedindex" name="seedindex">
-            </div>
-            <label for="derivephrase">EXPERIMENTAL PhraseFile <a @click="openPhrasefile"><i class="fal fa-exclamation-circle"></i></a></label>
-            <div class="login">
-              <input type="password" v-model="derivephrase" name="derivephrase" />
-            </div>
-            <div>
-              <button @click="$refs.seedfile.click()" class="btn outline" id="seedfile">{{ filebutton }}</button>
-              <input type="file" id="deriveupload" ref="seedfile" @change="filebuttonchange" style="display:none;" />
-              <button @click="derivefromphrase" class="btn outline" id="derivebutton">Derive</button>
-            </div>
-          </div>
-          <button @click="openWallet" class="openwallet btn" type="button">Open Wallet</button>
-          <scan-qr @scanned="scanDone"></scan-qr>
-          <scan-nfc v-if="nfcsup !== false" @scanned="scanDone"></scan-nfc>
-        </div>
-        <div id="buttons">
-          <router-link class="genwallet" :to="$store.getters['app/nodeLink'] + 'generate'">Generate Wallet</router-link>
-        </div>
+  <div>
+      <div class="preloader">        
+        <Lottie :options="lottieOptions" :height="600" :width="800" v-on:complete="animacionCompletada" />
       </div>
+      <div class="hero is-fullheight is-dark">
+          <div class="is-overlay waves">
+          </div>
+          <div class="is-overlay intraders-badge">
+              <svg id="Componente_7_3" data-name="Componente 7 – 3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="86" height="320" viewBox="0 0 86 320">
+                  <defs>
+                      <pattern id="pattern" preserveAspectRatio="none" width="100%" height="100%" viewBox="0 0 424 80">
+                          <image width="424" height="80" xlink:href="@/assets/img/Logo-Intradrer-white.png" />
+                      </pattern>
+                  </defs>
+                  <g id="Grupo_2" data-name="Grupo 2" transform="translate(988 -126) rotate(90)">
+                      <g id="Rectángulo_7" data-name="Rectángulo 7" transform="translate(126 902)" fill="#000f1a"
+                          stroke="#fff" stroke-width="1">
+                          <rect width="320" height="86" stroke="none" />
+                          <rect x="0.5" y="0.5" width="319" height="85" fill="none" />
+                      </g>
+                      <g id="Grupo_1" data-name="Grupo 1" transform="translate(572 1917.148) rotate(180)">
+                          <text id="Powered_by_the_" data-name="Powered by the
+                    " transform="translate(140 994.148)" fill="#fff" font-size="11"
+                              font-family="Montserrat-Light, Montserrat" font-weight="300" letter-spacing="0.2em">
+                              <tspan x="0" y="0">Powered by the</tspan>
+                              <tspan x="0" y="14"></tspan>
+                          </text>
+                          <text id="ecosystem_" data-name="ecosystem
+                    " transform="translate(356 994.148)" fill="#fff" font-size="11"
+                              font-family="Montserrat-Light, Montserrat" font-weight="300" letter-spacing="0.2em">
+                              <tspan x="0" y="0">ecosystem</tspan>
+                              <tspan x="0" y="14"></tspan>
+                          </text>
+                          <rect id="Logo-Intradrer-white" width="78" height="15" transform="translate(266 982.148)"
+                              fill="url(#pattern)" />
+                      </g>
+                  </g>
+              </svg>
+          </div>
+          <div class="hero-head">
+              <nav class="navbar">
+                  <div class="container">
+                      <div class="navbar-brand">
+                          <div class="navbar-item">
+                              <img style="max-height: 50px" src="@/assets/img/logo-primario (2).png" alt="Logo">
+                          </div>
+                          <span class="navbar-burger" data-target="navbarMenuHeroA">
+                              <span></span>
+                          <span></span>
+                          <span></span>
+                          </span>
+                      </div>
+                      <div class="navbar-start">
+                          <div class="navbar-item">
+                              <span class="is-size-7 has-text-primary"> ES / EN / POR</span>
+                          </div>
+                      </div>
+                      <div class="navbar-end">
+                          <div class="navbar-item">
+                              <div class="button is-primary is-outlined is-uppercase is-small has-text-weight-bold"  @click="logout">
+                                  Salir
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </nav>
+          </div>
+          <div class="hero-body">
+              <div class="container">
+                  <div class="columns">
+                      <div class="column is-6">
+                          <div class="title is-6 is-uppercase has-text-weight-light">Monedero</div>
+                          <div class="columns is-multiline">
+                              <div class="column is-12">
+                                  <div class="card box has-background-primary">
+                                      <div class="title is-1">
+                                          <span class="has-text-weight-light">CTD</span> {{ balance }}
+                                      </div>
+                                      <div class="tags has-addons">
+                                          <span class="tag">Dirección</span>
+                                          <span class="tag is-dark">{{ address }}</span>
+                                      </div>
+                                      <div class="buttons">
+                                          <div class="button is-dark is-outlined is-small">Anexa tu número de teléfono
+                                          </div>
+                                          <div class="button is-white is-outlined is-small">Copiar Dirección</div>
+                                      </div>
+
+                                  </div>
+                              </div>
+                              <div class="column is-6">
+                                  <div class="card box has-background-white has-cursor-pointer" @click="receive = true">
+                                      <div class="icon has-text-primary"><i data-feather="download-cloud"></i></div>
+                                      <div class="title is-4 has-text-primary">
+                                          Recibir
+                                          <span class="has-text-weight-light">Fondos</span>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="column is-6">
+                                  <div class="card box has-background-dark has-cursor-pointer" @click="send = true">
+                                      <div class="icon has-text-primary"><i data-feather="upload-cloud"></i></div>
+                                      <div class="title is-4">
+                                          Enviar <br />
+                                          <span class="has-text-weight-light">Fondos</span>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="column is-5 is-offset-1">
+                          <div class="title is-6 has-text-weight-light is-uppercase">Historial</div>
+                          <transaction
+                            v-for="(transaction, index) in history"
+                            :key="index"
+                            :index="index"
+                            :transaction="transaction"
+                            v-on:blockdetails="blockdetails = $event"
+                            :type="transaction.type"
+                          ></transaction>                       
+
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+
+
+          <div id="send" class="page" :class="{active: send !== false}">
+            <a class="close" v-if="closebutton === true" @click="send = false"><i class="fal fa-times"></i></a>
+            <send :open="send" @close="send = false"></send>
+          </div>
+
+          <div id="receive" class="page" :class="{active: receive !== false}">
+            <a class="close" v-if="closebutton === true" @click="receive = false"><i class="fal fa-times"></i></a>
+            <receive
+              :address="address"
+            ></receive>
+          </div>
+
+
+      </div>
+  </div>
+  <!-- <div class="wallet">
+    <div type="hidden" id="workstorage"></div>
       <div id="wallet" class="page" :class="{active: open === true}">
         <div id="powstatus">
             <div class="status busy" :class="{active: ready === false}">Calculating Work <i class="fas fa-spinner fa-spin"></i></div>
             <div class="status ready" :class="{active: ready === true}">Ready <i class="fas fa-check"></i></div>
         </div>
+
         <div class="inner">
           <div class="block">
             <div class="headingtitle top">
@@ -66,6 +158,7 @@
               <span class="refresh rotate" @click="refresh" :class="{ down: isActive }"><i class="fal fa-sync"></i></span>
               <div class="lastrefresh">Last Refresh: {{ lastrefresh.toLocaleTimeString() }}</div>
             </div>
+
             <simplebar class="block pending">
               <div id="output">
                 <div class="balance">
@@ -75,7 +168,9 @@
                   <a class="balanceextra" href="" @click.prevent="balanceextra = !balanceextra"><i data-fa-transform="grow-20" class="fal fa-ellipsis-h"></i></a>
                 </div>
               </div>
+
               <div class="headingtitle showmobile">History</div>
+
               <transaction
                 v-for="(transaction, index) in pending"
                 :key="index"
@@ -85,10 +180,9 @@
                 type="pending"
                 @receive="refreshDetails"
               ></transaction>
-
             </simplebar>
-
           </div>
+
           <simplebar class="block history">
             <div class="headingtitle hidemobile">History</div>
 
@@ -102,17 +196,21 @@
             ></transaction>
           </simplebar>
         </div>
+
         <div id="walletmenu" class="menu">
           <div class="bg"></div>
+
           <div class="content">
             <div class="tab" data-tab="#receive" @click="receive = true">
               <span class="menuicon"><i data-fa-transform="grow-8" class="fal fa-wallet"></i></span>
               <span>Receive</span>
             </div>
+
             <div class="tab" data-tab="#send" @click="send = true">
               <span class="menuicon"><i data-fa-transform="grow-8" class="fal fa-coins"></i></span>
               <span>Send</span>
             </div>
+
             <div class="tab" data-tab="#settings" @click="settings = true">
               <span class="menuicon"><i data-fa-transform="grow-8" class="fal fa-cog"></i></span>
               <span>Settings</span>
@@ -147,7 +245,7 @@
         <p>Before you use this method to login to your wallet you should have a firm grasp on what is happening on the backend. This login method will shasum a file or a phrase or the combination of the two sums and use that as the seed for your account. In general human beings are incapable of creating a cryptographically secure phrases which is why BIP39 exists, at the least you should use a file + phrase to login using this method. Please also generate a paper wallet from Generate Wallet or write down your seed somewhere. While using this method have the underlying expectation that the funds using this seed have a chance to be stolen and only ever use it for small daily transactional amounts.</p>
       </div>
 
-  </div>
+  </div> -->
 </template>
 
 <script>
@@ -155,17 +253,18 @@
 import Transaction from '@/components/Transaction.vue'
 import Send from '@/views/Send.vue'
 import Receive from '@/views/Receive.vue'
-import Settings from '@/views/Settings.vue'
-import BlockState from '@/components/BlockState.vue'
+// import Settings from '@/views/Settings.vue'
+// import BlockState from '@/components/BlockState.vue'
+// import simplebar from 'simplebar-vue';
 import { serverMixin } from '../mixins/serverMixin.js'
 import * as webglpow from '../mixins/webgl-pow.js'
 import * as NanoCurrency from '@thelamer/nanocurrency'
 import Worker from 'worker-loader!./../mixins/pow.js'
-import simplebar from 'simplebar-vue';
 import 'simplebar/dist/simplebar.min.css';
-import ScanQr from '../components/ScanQr.vue'
-import ScanNfc from '../components/ScanNfc.vue'
 
+const feather = require('feather-icons')
+import Lottie from 'vue-lottie/src/lottie.vue'
+import * as animationData from '@/assets/data.json';
 const hardwareConcurrency = window.navigator.hardwareConcurrency || 2
 const workerCount = Math.max(hardwareConcurrency - 1, 1)
 let workerList = []
@@ -175,7 +274,7 @@ function initialState (){
     seed: null,
     seedindex: null,
     key: null,
-    open: false,
+    open: true,
     details: {},
     error: null,
     balance: 0,
@@ -201,33 +300,30 @@ function initialState (){
     aboutphrase: false,
     workthresholdgl: '0xFFFFFFF8',
     workthreshold: 'fffffff800000000',
-    filebutton: 'File'
+    filebutton: 'File',
+    lottieOptions: {
+        animationData: animationData.default,
+    }
   }
 }
 
 export default {
   name: 'Home',
   components: {
+    Lottie,
     Transaction,
     Send,
     Receive,
-    Settings,
-    BlockState,
-    simplebar,
-    ScanQr,
-    ScanNfc
+    // Settings,
+    // BlockState,
+    // simplebar
+  
   },
   mixins: [ serverMixin ],
   data() {
     return initialState();
   },
   watch: {
-    open: function (newopen) {
-      if(newopen === true && this.key !== null || this.seed !== null) {
-        console.log('open')
-        this.refreshDetails(true)
-      }
-    },
     pow: async function (newpow, oldpow) {
       if(this.open === true && newpow !== oldpow && newpow === null) {
         console.log('pow change')
@@ -267,20 +363,21 @@ export default {
       }
     }
   },
-  mounted () {
+  async mounted () {
     if (this.$route.name == 'POS') {
-     this.address = this.$route.params.address
+     this.address = this.$store.state.node.address;
      this.receive = true
      this.closebutton = false
     }
     if ("NDEFReader" in window) {
       this.nfcsup = true
     }
-
-    if(this.$store.state.app.node.address === undefined) {
-      this.$router.push('node')
+    await this.refreshDetails(true);
+    console.log(this.address);
+    if(this.$store.state.app.privatekey === undefined || this.address === null) {
+      this.$router.push('/')
     }
-
+    feather.replace();
   },
   computed: {
     genWalletLink () {
@@ -349,6 +446,7 @@ export default {
         console.log('Terminate: ' + workerIndex)
         workerList[workerIndex].terminate();
       }
+      this.$router.push("/");
     },
     refresh () {
       this.isActive = !this.isActive
@@ -375,7 +473,7 @@ export default {
         }
         this.representative = this.details.representative;
       } catch(e) {
-        this.error = 'Could not connect to RPC'
+        this.error = 'Could not connect to RPC 1'
         this.open = false
       }
     },
@@ -458,47 +556,6 @@ export default {
       this.address = this.getAddress(key)
       this.details = await this.$store.dispatch('app/getDetails', this.address)
     },
-    async openWallet () {
-      this.error = null
-      if(this.key) {
-        try {
-          const checkKey = NanoCurrency.checkKey(this.key)
-          if(checkKey === false) {
-            this.error = 'Invalid key'
-          } else {
-            this.$store.commit('app/privatekey', this.key)
-            
-            this.open = true
-          }
-
-        } catch(e) {
-          this.error = e
-        }
-
-      } else if (this.seed) {
-        try {
-          const checkSeed = NanoCurrency.checkSeed(this.seed)
-          if(checkSeed === false) {
-            this.error = 'Invalid Seed'
-          } else {
-            if (this.seedindex == null) {
-              this.seedindex = 0
-            } else {
-              this.seedindex = parseInt(this.seedindex)
-            }
-            this.key = NanoCurrency.deriveSecretKey(this.seed, this.seedindex)
-            this.$store.commit('app/privatekey', this.key)
-            
-            this.open = true
-          }
-
-        } catch(e) {
-          this.error = e
-        }
-
-      }
-
-    },
     async derivefromphrase () {
       const that = this
       const fileitem = document.getElementById('deriveupload').files[0]
@@ -533,8 +590,15 @@ export default {
     filebuttonchange () {
       const fileitem = document.getElementById('deriveupload').files[0]
       this.filebutton = fileitem.name.substring(0, 10) + '..'
+    },
+    animacionCompletada(){
+      console.log("Animación completada");
+      const preloaderContainer = document.querySelector('.preloader');
+      preloaderContainer.classList.add('hide')
+      setTimeout(() => {
+          preloaderContainer.classList.add('is-hidden')
+      }, 800);
     }
-
   }
 }
 </script>

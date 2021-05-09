@@ -1,6 +1,6 @@
 <template>
   <div class="scan-qr-code">
-    <button class="scan btn outline" @click="scanQR" type="button">Scan QR</button>
+    <div class="button is-primary is-outlined" @click="scanQR">Escanear QR</div>
     <div class="page" style="z-index: 9;" :class="{active: scan !== false}">
       <a class="close" @click="closeScan"><i class="fal fa-times"></i></a>
       <div v-if="loadingMsg">{{ loadingMsg }}</div>
@@ -8,6 +8,16 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+  .page{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: silver;
+  }
+
+</style>
 
 <script>
 import jsQR from 'jsqr'
@@ -27,7 +37,7 @@ export default {
       canvas: null,
       stream: null,
       continue: true,
-      loadingMsg: 'Unable to access video stream (please make sure you have a webcam enabled)',
+      loadingMsg: 'No se puede acceder al stream de video (por favor asegúrate de que tu webcam esté habilitada)',
     }
   },
 
