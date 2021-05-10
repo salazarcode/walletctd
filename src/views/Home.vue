@@ -94,7 +94,7 @@
                                       <div class="icon has-text-primary"><i data-feather="download-cloud"></i></div>
                                       <div class="title is-4 has-text-primary">
                                           Recibir
-                                          <span class="has-text-weight-light">Fondos x</span>
+                                          <span class="has-text-weight-light">Fondos</span>
                                       </div>
                                   </div>
                               </div>
