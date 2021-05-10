@@ -93,7 +93,7 @@
                                   <div class="card box has-background-white has-cursor-pointer" @click="receive = true">
                                       <div class="icon has-text-primary"><i data-feather="download-cloud"></i></div>
                                       <div class="title is-4 has-text-primary">
-                                          Recibir ANDRES
+                                          Recibir
                                           <span class="has-text-weight-light">Fondos</span>
                                       </div>
                                   </div>
