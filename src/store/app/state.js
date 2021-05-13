@@ -81,7 +81,7 @@ export function initialState () {
     history: [],
     pending: [],
     node: {
-      address: "andresalteclado.com",
+      address: "nano.andresalteclado.com",
       port: "7076",
       path: '',
       auth: null,
