@@ -82,10 +82,10 @@ export function initialState () {
     pending: [],
     node: {
       address: "nano.andresalteclado.com",
-      port: "7076",
+      port: "7077",
       path: '',
       auth: null,
-      protocol: "http"
+      protocol: "https"
     },
     prefixparams: 'useNanoPrefix'
   }
