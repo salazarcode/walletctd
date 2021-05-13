@@ -1,8 +1,8 @@
 <template>
   <div>
-      <div class="preloader">        
+      <!-- <div class="preloader">        
         <Lottie :options="lottieOptions" :height="600" :width="800" v-on:complete="animacionCompletada" />
-      </div>
+      </div> -->
       <div class="hero is-fullheight is-dark">
           <div class="is-overlay waves">
           </div>
