@@ -82,7 +82,7 @@ export function initialState () {
     pending: [],
     node: {
       address: "nano.andresalteclado.com",
-      port: "7077",
+      port: "80",
       path: '',
       auth: null,
       protocol: "https"
