@@ -87,7 +87,7 @@
                                         <li @click="setPrivate" class="df" :class="{ 'is-active': seedtab !== true}" for="key"><a>Clave Privada</a></li>
                                     </ul>
                                 </div>
-                                <form action="#">
+                                <form>
                                     <fieldset class="field">
                                         <div class="control">
                                             <input v-model="seed" v-if="seedtab" :type="logintype" placeholder="Seed" id="key" name="key" class="input is-primary">
