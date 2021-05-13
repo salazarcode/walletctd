@@ -22,8 +22,6 @@
             }
         },
         created() {    
-            console.log("Andrés mi papi manda.")
-
         }   
     }
 </script>

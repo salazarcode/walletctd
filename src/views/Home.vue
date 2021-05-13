@@ -592,7 +592,7 @@ export default {
       this.filebutton = fileitem.name.substring(0, 10) + '..'
     },
     animacionCompletada(){
-      console.log("Animación completada");
+      console.log("Animacion completada");
       const preloaderContainer = document.querySelector('.preloader');
       preloaderContainer.classList.add('hide')
       setTimeout(() => {
