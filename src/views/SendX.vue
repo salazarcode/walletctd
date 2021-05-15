@@ -1,13 +1,11 @@
 <template>
-  <div class="wrapper">
-    <div class="content">
-      <div class="labeltabs">
-        <label @click="setSend" class="df" :class="{ active: sendtab === true}">
-          Send
-        </label>
-        <label @click="setCheckout" class="df" :class="{ active: sendtab !== true}">
-          Checkout
-        </label>
+  <div class="card box">
+    <div class="card-content">
+      <div class="tabs is-small">
+          <ul>
+              <li @click="setSend" class="df" :class="{ active: sendtab === true}"><a>Enviar</a></li>
+              <li @click="setCheckout" class="df" :class="{ active: sendtab !== true}"><a>Checkout</a></li>
+          </ul>
       </div>
       <div v-show="checkout !== false" id="checkoutform">
         <div v-text="checkoutheader"></div>
@@ -20,15 +18,19 @@
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" class="checkout" :Placeholder="element.placeholder" :required="element.required">
           </div>
-          <div v-if="element.type === 'address'">
-            <label for="address1">Address:</label>
-            <input type="text" id="address1" name="address1" class="checkout" placeholder="Street Address" :required="element.required">
+          <div class="form" v-if="element.type === 'address'">
+            <label class="label" for="address1">Address:</label>
+            <input class="input checkout" type="text" id="address1" name="address1" placeholder="Street Address" :required="element.required">
+            
             <label for="address2">Address 2:</label>
             <input type="text" id="address2" name="address2" class="checkout" placeholder="Apt or Box #" :required="false">
+            
             <label for="country">Country:</label>
             <country-select v-model="country" id="country" name="country" :country="country" topCountry="US" class="checkout"/>
+            
             <label for="region">Region:</label>
             <region-select v-model="region" id="region" name="region" :country="country" :region="region" class="checkout"/>
+            
             <label for="city">City:</label>
             <input type="text" id="city" name="city" class="checkout" placeholder="Local City" :required="element.required">
             <label for="zip">Postal Code:</label>
@@ -41,24 +43,24 @@
         </div>
       </div>
       <div v-show="checkout === false && sendtab === true" id="sendform">
-        <label for="amount">Amount:</label>
+        <label class="label" for="amount">Monto:</label>
         <div class="login">
-          <input type="text" v-model="amount" id="amount" name="amount">
-          <span  @click="setmax" class="max">MAX</span>
+          <input class="input" type="text" v-model="amount" id="amount" name="amount">
+          <span  @click="setmax" class="tag is-small">Usar el máximo</span>
         </div>
-        <label for="destination">Destination:</label>
-        <input type="text" v-model="destination" id="destination" name="destination">
+        <label class="label" for="destination">Destino:</label>
+        <input class="input" type="text" v-model="destination" id="destination" name="destination">
       </div>
       <div v-if="checkout === false && sendtab === false">
         <label for="amount">Checkout Template URL:</label>
         <div class="login">
         <input type="text" v-model="formurl" id="formurl" name="formurl">
-        <span  @click="renderform" class="max">LOAD</span>
+        <span  @click="renderform" class="max">Cargar</span>
         </div>
       </div>
       <scan-qr v-if="checkout === false" @scanned="scanDone"></scan-qr>
       <scan-nfc v-if="nfcsup !== false && checkout === false" @scanned="scanDone"></scan-nfc>
-      <button v-if="open === true && ((sendtab === true && checkout === false) || (sendtab === false && checkout === true))" class="sendfunds btn" @click="send" type="button"><span v-show="loading !== true">Send</span><span v-show="loading === true" class="icon"><i class="fa fa-spinner"></i></span></button>
+      <button v-if="open === true && ((sendtab === true && checkout === false) || (sendtab === false && checkout === true))" class="sendfunds button is-primary has-margin-top-20" @click="send" type="button"><span v-show="loading !== true">Enviar</span><span v-show="loading === true" class="icon"><i class="fa fa-spinner"></i></span></button>
     </div>
   </div>
 </template>
@@ -70,6 +72,7 @@ import BigNumber from 'bignumber.js'
 import ScanQr from '../components/ScanQr.vue'
 import ScanNfc from '../components/ScanNfc.vue'
 import yaml from 'yaml-js'
+
 function sendInitial (){
   return {
     amount: '',
@@ -92,6 +95,8 @@ function sendInitial (){
     loading: false
   }
 }
+
+
 export default {
   name: 'Send',
   mixins: [ serverMixin ],
@@ -132,6 +137,7 @@ export default {
     if ("NDEFReader" in window) {
       this.nfcsup = true
     }
+    console.log("POW: " + this.pow)
   },
   methods: {
     scanDone: function (data) {
@@ -159,9 +165,11 @@ export default {
       }
     },
     async send() {
+      console.log("POW=" + this.pow)
       this.payload = {}
       this.payloadhash = ''
       if(this.pow === null) {
+        console.log("Dice que el POW es nulo")
         this.$notify({
           title: 'PoW not complete',
           text: 'Please wait for the status to be ready',
@@ -345,9 +353,12 @@ export default {
   height: 100%;
   max-width: 800px;
   padding-bottom: 100px;
+  background-color:white;
   @media all and (min-width: 1040px) {
     padding-bottom: 0;
   }
+
+  color:black !important;
 }
 .content {
   max-height: 100%;
