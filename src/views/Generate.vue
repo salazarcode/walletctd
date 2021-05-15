@@ -1,30 +1,30 @@
 <template>
-  <div id="genwallet" class="page active">
+  <div id="genwallet" class="page has-background-dark active">
     <router-link class="close" :to="$store.getters['app/nodeLink']"><i class="fal fa-times"></i></router-link>
     <!--<div class="inner">-->
-      <div class="block">
+      <div class="block  has-text-white">
         <div class="details smaller">
           <label for="seed">Seed <a class="refreshwallet" @click.prevent="refreshWallet" href=""><i class="fal fa-sync"></i></a></label>
-          <a href="#" @click="copyToClipboard(seed)" class="copy"><i class="fad fa-clone"></i></a>
+          <a href="#" @click="copyToClipboard(seed)" class="copy has-margin-left-10"><i class="fad fa-clone"></i></a>
           <div class="login">
-            <input class="copytext" type="text" v-model="seed" name="seed" />
-            <span @click="clearWallet" class="max">CLEAR</span>
+            <input class="copytext input " type="text" v-model="seed" name="seed" />
+            <span @click="clearWallet" class="tag is-small has-margin-top-10 has-margin-bottom-30 has-cursor-pointer">CLEAR</span>
           </div>
         </div>
         <div class="details smaller">
           <label for="address">Address</label>
-          <a href="#" @click="copyToClipboard(address)" class="copy"><i class="fad fa-clone"></i></a>
-          <input class="copytext" type="text" v-model="address" name="address" />
+          <a href="#" @click="copyToClipboard(address)" class="copy has-margin-left-10"><i class="fad fa-clone"></i></a>
+          <input class="copytext input " type="text" v-model="address" name="address" />
         </div>
-        <button style="margin-top: 30px;" class="btn" @click="copyToClipboard('Seed: ' + seed + '\nPrivate Key: ' + privatekey + '\nPublic Key: ' + publickey + '\nAddress: ' + address)">Copy To Clipboard</button>
-        <button class="btn outline" @click="save('Seed: ' + seed + '\nPrivate Key: ' + privatekey + '\nPublic Key: ' + publickey + '\nAddress: ' + address)">Download</button>
+        <button style="margin-top: 30px;" class="button is-primary" @click="copyToClipboard('Seed: ' + seed + '\nPrivate Key: ' + privatekey + '\nPublic Key: ' + publickey + '\nAddress: ' + address)">Copiar al Portapapeles</button>
+        <button class="button is-primary is-outlined" @click="save('Seed: ' + seed + '\nPrivate Key: ' + privatekey + '\nPublic Key: ' + publickey + '\nAddress: ' + address)">Descargar</button>
         <!-- <wallet :private="seed" :public="address"></wallet>
         <div class="details smaller padtop">
           <label for="phrase">EXPERIMENTAL PhraseFile <a @click="openPhrasefilegen"><i class="fal fa-exclamation-circle"></i></a></label>
-          <input class="copytext" type="text" v-model="phrase" name="phrase" />
-          <label for="fileupload" class="btn outline">{{ filebutton }}</label>
+          <input class="copytext input" type="text" v-model="phrase" name="phrase" />
+          <label for="fileupload" class="button outline">{{ filebutton }}</label>
           <input type="file" id="fileupload" @change="filebuttonchange" style="display:none;" />
-          <button @click="seedfromphrase" class="btn outline" >PhraseFile Generate</button>
+          <button @click="seedfromphrase" class="button outline" >PhraseFile Generate</button>
         </div> -->
       </div>
       <div class="page" style="z-index: 9;" :class="{active: aboutphrasegen !== false}">
@@ -162,7 +162,7 @@ export default {
 <style lang="scss">
 </style>
 <style lang="scss" scoped>
-.btn {
+.button {
   width: 100%;
   margin-bottom: 15px;
 }
@@ -183,7 +183,7 @@ export default {
     }
   }
 }
-.details .copy {
+.details .copy has-margin-left-10 {
     right: -21px;
     top: 40px;
 }

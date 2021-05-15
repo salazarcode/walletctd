@@ -3,10 +3,12 @@
     <div v-show="showset === false" class="block">
       <div class="address"><span class="" v-html="highlightAddress(address)"></span> <a @click="copyToClipboard(address)" class="value"><i class="fad fa-clone"></i></a> <a @click="link('address',address)" class="value"><i class="fad fa-external-link"></i></a></div>
       <qr-block :address="receive"></qr-block>
-      <div class="receive-amount" v-if="set === true">Amount: {{ amount }}</div>
-      <a v-if="clipboard === true" @click.prevent="copyToClipboard(address)" class="btn">Copy Address</a>
-      <a @click.prevent="setAmount()" class="btn outline">Set Amount</a>
-      <a v-if="set === true" @click.prevent="clearReceive()" class="btn outline">Clear Amount</a>
+      <div class="receive-amount" v-if="set === true">Monto: {{ amount }}</div>
+      <div class="buttons has-margin-top-30">
+        <a v-if="clipboard === true" @click.prevent="copyToClipboard(address)" class="button is-primary">Copiar Dirección</a>
+        <a @click.prevent="setAmount()" class="button is-primary is-outlined">Definir Monto</a>
+        <a v-if="set === true" @click.prevent="clearReceive()" class="button is-primary is-outlined">Limpiar Monto</a>
+      </div>
     </div>
     <div v-show="showset !== false" class="block" style="padding: 0; margin-top: -47px;">
       <div class="amount"><input type="text" @keypress="isNumber($event)" @paste="isNumber($event)" ref="amount" v-model="amount" onfocus="blur();" /></div>
@@ -16,8 +18,8 @@
         <div class="row"><button @click="addNumber('1')">1</button><button @click="addNumber('2')">2</button><button @click="addNumber('3')">3</button></div>
         <div class="row"><button @click="backspace()"><i class="fal fa-backspace"></i></button><button @click="addNumber('0')">0</button><button @click="addNumber('.')">.</button></div>
       </div>
-      <a @click.prevent="setReceive()" class="btn">Receive</a>
-      <a @click.prevent="cancel()" class="btn outline">Cancel</a>
+      <a @click.prevent="setReceive()" class="button is-primary">Recibir</a>
+      <a @click.prevent="cancel()" class="button is-primary is-outlined">Cancelar</a>
     </div>
 
   </div>

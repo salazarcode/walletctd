@@ -28,13 +28,13 @@
 
 <div class="notification is-dark">
   <div class="columns level">
-      <div class="column is-2">
+      <div class="column is-2" :value="hash" @click="$emit('blockdetails', hash)">
           <div v-if="type === 'send'" class="icon has-text-link">
             <div v-html="iconSvg('minus-square')"></div> 
           </div>
 
-          <div v-else-if="type === 'pending'" class="icon has-text-link">
-            <div v-html="iconSvg('alert-triagle')"></div> 
+          <div v-else-if="type === 'pending'" class ="icon has-text-link">
+            <div v-html="iconSvg('alert-triangle')"></div> 
           </div>
           
           <div v-else class="icon has-text-link">
@@ -134,6 +134,12 @@ export default {
 
   },
   methods: {    
+    
+    formatMoney(amount){
+      const options = { style: 'currency', currency: 'USD' };
+      const formatter = new Intl.NumberFormat('en-US', options);
+      return formatter.format(amount);
+    },
     iconSvg: function (icon) {
       return feather.icons[icon].toSvg();
     },

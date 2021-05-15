@@ -1,6 +1,6 @@
 <template>
   <div class="scan-qr-code">
-    <div class="button is-primary is-outlined" @click="scanQR">Escanear QR</div>
+    <div class="button is-primary is-outlined has-margin-top-20" @click="scanQR">Escanear QR</div>
     <div class="page" style="z-index: 9;" :class="{active: scan !== false}">
       <a class="close" @click="closeScan"><i class="fal fa-times"></i></a>
       <div v-if="loadingMsg">{{ loadingMsg }}</div>

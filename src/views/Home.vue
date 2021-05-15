@@ -75,7 +75,7 @@
                               <div class="column is-12">
                                   <div class="card box has-background-primary">
                                       <div class="title is-1">
-                                          <span class="has-text-weight-light">CTD</span> {{ balance }}
+                                          <span class="has-text-weight-light">CTD</span> {{ formatMoney(balance) }}
                                       </div>
                                       <div class="tags has-addons">
                                           <span class="tag">Dirección</span>
@@ -107,10 +107,26 @@
                                       </div>
                                   </div>
                               </div>
+                              <div class="column is-12">                           
+                              </div>
+
+                              
+
                           </div>
                       </div>
                       <div class="column is-5 is-offset-1">
                           <div class="title is-6 has-text-weight-light is-uppercase">Historial</div>
+                          
+                          <transaction
+                            v-for="(transaction, index) in pending"
+                            :key="index"
+                            :index="index"
+                            :transaction="transaction"
+                            v-on:blockdetails="blockdetails = $event"
+                            type="pending"
+                            @receive="refreshDetails"
+                          ></transaction>     
+                          <hr />
                           <transaction
                             v-for="(transaction, index) in history"
                             :key="index"
@@ -127,13 +143,13 @@
 
 
 
-          <div id="send" class="page" :class="{active: send !== false}">
-            <a class="close" v-if="closebutton === true" @click="send = false"><i class="fal fa-times"></i></a>
+          <div id="send" style="top:0" class="page has-padding-top-60 has-background-dark has-text-white" :class="{active: send !== false}">
+            <a class="close is-relative" v-if="closebutton === true" @click="send = false"><i class="fal fa-times"></i></a>
             <send :open="send" @close="send = false"></send>
           </div>
 
-          <div id="receive" class="page" :class="{active: receive !== false}">
-            <a class="close" v-if="closebutton === true" @click="receive = false"><i class="fal fa-times"></i></a>
+          <div id="receive" style="top:0" class="page has-padding-top-60 has-background-dark has-text-white" :class="{active: receive !== false}">
+            <a class="close is-relative" v-if="closebutton === true" @click="receive = false"><i class="fal fa-times"></i></a>
             <receive
               :address="address"
             ></receive>
@@ -409,6 +425,9 @@ export default {
     }
   },
   methods: {
+    formatMoney(amount){
+      return (parseFloat(amount)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
     setSeed () {
       this.seedtab = true
     },

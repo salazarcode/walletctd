@@ -177,7 +177,7 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s;
-            background-color:silver;
+            background-color:gray;
             position: absolute;
             top: 32px;
             left: 100vw;
