@@ -51,12 +51,12 @@
         <label for="amount">Checkout Template URL:</label>
         <div class="login">
         <input type="text" v-model="formurl" id="formurl" name="formurl">
-        <span  @click="renderform" class="max">LOAD</span>
+        <span  @click="renderform" class="max">Cargar</span>
         </div>
       </div>
       <scan-qr v-if="checkout === false" @scanned="scanDone"></scan-qr>
       <scan-nfc v-if="nfcsup !== false && checkout === false" @scanned="scanDone"></scan-nfc>
-      <button v-if="open === true && ((sendtab === true && checkout === false) || (sendtab === false && checkout === true))" class="sendfunds button is-primary has-margin-top-20" @click="send" type="button"><span v-show="loading !== true">Send</span><span v-show="loading === true" class="icon"><i class="fa fa-spinner"></i></span></button>
+      <button v-if="open === true && ((sendtab === true && checkout === false) || (sendtab === false && checkout === true))" class="sendfunds button is-primary has-margin-top-20" @click="send" type="button"><span v-show="loading !== true">Enviar</span><span v-show="loading === true" class="icon"><i class="fa fa-spinner"></i></span></button>
     </div>
   </div>
 </template>
