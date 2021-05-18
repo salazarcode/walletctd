@@ -1,13 +1,11 @@
 <template>
-  <div class="wrapper">
+  <div class="card box">
     <div class="content">
-      <div class="labeltabs">
-        <label @click="setSend" class="df" :class="{ active: sendtab === true}">
-          Send
-        </label>
-        <label @click="setCheckout" class="df" :class="{ active: sendtab !== true}">
-          Checkout
-        </label>
+      <div class="tabs is-small">
+          <ul>
+              <li @click="setSend" class="df" :class="{ active: sendtab === true}"><a>Enviar</a></li>
+              <li @click="setCheckout" class="df is-hidden" :class="{ active: sendtab !== true}"><a>Checkout</a></li>
+          </ul>
       </div>
       <div v-show="checkout !== false" id="checkoutform">
         <div v-text="checkoutheader"></div>
@@ -41,13 +39,13 @@
         </div>
       </div>
       <div v-show="checkout === false && sendtab === true" id="sendform">
-        <label for="amount">Amount:</label>
+        <label for="amount">Monto:</label>
         <div class="login">
-          <input type="text" v-model="amount" id="amount" name="amount">
-          <span  @click="setmax" class="max">MAX</span>
+          <input class="input" type="text" v-model="amount" id="amount" name="amount">
+          <span  @click="setmax" class="max tag is-success has-margin-top-10 has-margin-bottom-30 has-cursor-pointer">MAX</span>
         </div>
-        <label for="destination">Destination:</label>
-        <input type="text" v-model="destination" id="destination" name="destination">
+        <label for="destination">Dirección de destino:</label>
+        <input class="input" type="text" v-model="destination" id="destination" name="destination">
       </div>
       <div v-if="checkout === false && sendtab === false">
         <label for="amount">Checkout Template URL:</label>
@@ -58,7 +56,7 @@
       </div>
       <scan-qr v-if="checkout === false" @scanned="scanDone"></scan-qr>
       <scan-nfc v-if="nfcsup !== false && checkout === false" @scanned="scanDone"></scan-nfc>
-      <button v-if="open === true && ((sendtab === true && checkout === false) || (sendtab === false && checkout === true))" class="sendfunds btn" @click="send" type="button"><span v-show="loading !== true">Send</span><span v-show="loading === true" class="icon"><i class="fa fa-spinner"></i></span></button>
+      <button v-if="open === true && ((sendtab === true && checkout === false) || (sendtab === false && checkout === true))" class="sendfunds button is-primary is-fullwidth" @click="send" type="button"><span v-show="loading !== true">Enviar Fondos</span><span v-show="loading === true" class="icon"><i class="fa fa-spinner"></i></span></button>
     </div>
   </div>
 </template>
