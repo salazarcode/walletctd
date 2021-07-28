@@ -82,10 +82,10 @@ export function initialState () {
     pending: [],
     node: {
       address: "cointradernode.eastus.azurecontainer.io",
-      port: "",
+      port: "7076",
       path: '',
       auth: null,
-      protocol: "https"
+      protocol: "http"
     },
     prefixparams: 'useNanoPrefix'
   }
