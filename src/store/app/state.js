@@ -85,7 +85,7 @@ export function initialState () {
       port: "7076",
       path: '',
       auth: null,
-      protocol: "http"
+      protocol: "https"
     },
     prefixparams: 'useNanoPrefix'
   }
