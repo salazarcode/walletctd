@@ -81,7 +81,7 @@ export function initialState () {
     history: [],
     pending: [],
     node: {
-      address: "nano.andresalteclado.com",
+      address: "cointradernode.eastus.azurecontainer.io",
       port: "",
       path: '',
       auth: null,
