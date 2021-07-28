@@ -81,7 +81,7 @@ export function initialState () {
     history: [],
     pending: [],
     node: {
-      address: "ctdwallet.azurewebsites.net",
+      address: "ctdnode.azurewebsites.net",
       port: "",
       path: '',
       auth: null,
