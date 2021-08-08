@@ -193,16 +193,25 @@ export default {
       }
       const amount = NanoCurrency.convert(this.amount, this.nanoconv)
       // make sure it's a valid number
-      if (this.checkamount(amount) && NanoCurrency.checkAddress(this.destination)) {
+      if (this.checkamount(amount) && NanoCurrency.checkAddress(this.destination)) 
+      {
         const senderpublickey = NanoCurrency.derivePublicKey(this.privatekey)
+
         let params = {}
         params[this.prefixparams] = true
+
+        // SE OBTIENE EL ESTADO ACTUAL DEL REMITENTE DEL PAGO
+
         const sender = NanoCurrency.deriveAddress(senderpublickey,params)
         let info = {}
         info['action'] = 'account_info'
         info['representative'] = 'true'
         info['account'] = sender
         const res = await this.$store.dispatch('app/rpCall', info)
+
+        
+        // SE CONSTRUYE EL NUEVO BLOQUE QUE INCLUYE LA TRANSACCIÓN Y SE IMPRIME EN CÓNSOLA
+
         const balance = new BigNumber(res.balance).minus(new BigNumber(amount)).toFixed()
         const block = NanoCurrency.createBlock(this.privatekey, {
           work: this.pow,
@@ -211,15 +220,25 @@ export default {
           balance: balance,
           link: this.destination
         },params)
+
+        console.log("Bloque creado con la disminución de fondos:");
         console.log(block)
+
+        // SE CONSTRUYE EL MENSAJE PARA EL SERVIDOR RPC QUE INCLUYE EL BLOQUE NUEVO
+
         let send = {}
         send['action'] = 'process'
         //send['json_block'] = 'true'
         send['subtype'] = 'send'
         send['block'] = JSON.stringify(block.block)
+        console.log("Paquete de información que se enviará para ejecutar la transacción con el bloque creado previo serializado:");
         console.log(send)
+
+        // SE HACE EL ENVÍO DE LA INSTRUCCIÓN RPC PREVIA AL SERVIDOR
+
         const sendres = await this.$store.dispatch('app/rpCall', send)
-        if (Object.keys(this.payload).length !== 0) {
+        if (Object.keys(this.payload).length !== 0) 
+        {
           this.payload['transactionhash'] = sendres.hash
           this.payload['net'] = this.net
           this.payload['formurl'] = this.formurl
@@ -232,10 +251,11 @@ export default {
               text: 'Transaction has been signed at nanometadata.com',
               type: 'success'
             })
+            // FIRMA AGREGADA A LA TRANSACCIÓN
             console.log(payloadstring)
           } else {
             this.$notify({
-              title: 'Cannot sign transaction',
+              title: 'No se pudo firmar la transacción',
               text: apires,
               type: 'error'
             })
