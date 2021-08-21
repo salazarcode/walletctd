@@ -81,7 +81,7 @@ export function initialState () {
     history: [],
     pending: [],
     node: {
-      address: "ctdnode.azurewebsites.net",
+      address: "ctdnode.intraders.com.co",
       port: "",
       path: '',
       auth: null,
