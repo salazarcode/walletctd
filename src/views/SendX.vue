@@ -171,8 +171,8 @@ export default {
       if(this.pow === null) {
         console.log("Dice que el POW es nulo")
         this.$notify({
-          title: 'PoW not complete',
-          text: 'Please wait for the status to be ready',
+          title: 'Calculo de PoW incompleto',
+          text: 'Por favor espere que el cálculo termine',
           type: 'error'
         })
       }

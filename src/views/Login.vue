@@ -1,5 +1,6 @@
 <template>
 <div>
+
       <div class="hero is-fullheight is-dark">
         <div class="is-overlay waves">
         </div>
@@ -78,15 +79,18 @@
                     <div class="column is-5">
                         <div class="card box">
                             <div class="card-content has-text-dark">
+                            
                                 <div class="title is-5 is-uppercase has-text-dark">
                                     Accede a tu monedero.
                                 </div>
+
                                 <div class="tabs is-small">
                                     <ul>
                                         <li @click="setSeed" class="df" :class="{ 'is-active': seedtab === true}" for="seed"><a>SEED</a></li>
                                         <li @click="setPrivate" class="df" :class="{ 'is-active': seedtab !== true}" for="key"><a>Clave Privada</a></li>
                                     </ul>
                                 </div>
+
                                 <form disabled>
                                     <fieldset class="field">
                                         <div class="control">
@@ -98,7 +102,56 @@
                                         <button @click="openWallet" class="button is-primary has-text-weight-bold">Abrir Monedero</button>
                                         <scan-qr @scanned="scanDone"></scan-qr>
                                     </div>
-                                </form>
+                                </form>                            
+                            <hr/>
+                            <div class="buttons is-centered">
+                              <a href="#" class="passport-trigger button is-fullwidth is-primary is-outlined level">
+                                <img src="https://web.passport.intraders.com.co/logo.976c902d.svg" alt="" style="width:90px">
+                                <span class="has-margin-left-20 is-uppercase has-text-weight-light">PASSPORT <b>LOGIN</b></span>
+                              </a>
+                            </div>
+                            <div class="passport-container is-hidden">
+                              <!-- <div class="level">
+                                  <img src="./assets/logo.svg" alt="" style="width:90px">
+                                  <div class="title is-6 is-uppercase has-text-weight-light has-text-dark">PASSPORT <b>LOGIN</b></div>
+                              </div> -->
+                              
+                              <div class="card box has-background-light">
+                                  <form name="authenticate" method="post" action="#" class="form">
+                                      <h2 class="title is-2 has-text-weight-light is-uppercase has-text-dark">Accede con <b>Passport</b></h2>
+                                      <fieldset class="field has-haddons">
+                                          <div class="control has-icons-left has-icons-right">
+                                              <input class="input is-primary" id="email" name="email" type="email" placeholder="Email" autocomplete="email">
+                                              <span class="icon is-small is-left">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                              </span>
+                                              <span class="icon is-small is-right has-text-success is-hidden">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                              </span>
+                                            </div>
+                                      </fieldset>
+                                      <fieldset class="field has-haddons">
+                                          <div class="control has-icons-left has-icons-right">
+                                              <input class="input is-primary" id="password" type="password" placeholder="Contraseña" autocomplete="current-password">
+                                              <span class="icon is-small is-left">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                              </span>
+                                              <span class="icon is-small is-right has-text-success is-hidden">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                              </span>
+                                            </div>
+                                      </fieldset>
+                                      
+                                      <div class="buttons has-padding-top-30">
+                                          <button id="auth" type="submit" class="button is-primary is-size-7 is-uppercase is-fullwidth">Acceder con Passport</button>
+                                      </div>
+                                      <div class="response has-padding-bottom-30"></div>
+                                  </form>
+                              </div>
+                              <p class="is-size-7">Al registrarte, aceptas nuestras <a href="#" class="link has-text-primary">Políticas de privacidad</a>. Por favor, asegurate de leerlas a profundidad.
+                              </p>
+                            </div>
+
                             </div>
                         </div>
                     </div>
@@ -128,12 +181,12 @@
 
 <script>
 // @ is an alias to /src
+
 import { serverMixin } from '../mixins/serverMixin.js'
 import * as webglpow from '../mixins/webgl-pow.js'
 import * as NanoCurrency from '@thelamer/nanocurrency'
 import Worker from 'worker-loader!./../mixins/pow.js'
-import ScanQr from '../components/ScanQr.vue'
-
+//import ScanQr from '../components/ScanQr.vue'
 
 const hardwareConcurrency = window.navigator.hardwareConcurrency || 2
 const workerCount = Math.max(hardwareConcurrency - 1, 1)
@@ -177,7 +230,6 @@ function initialState (){
 export default {
   name: 'Login',  
   components: {
-    ScanQr
   },
   mixins: [ serverMixin ],
   data() {
@@ -238,6 +290,19 @@ export default {
     if ("NDEFReader" in window) {
       this.nfcsup = true
     }
+
+    // Handling Passport Load
+
+    let passportjs = document.createElement("script")
+    passportjs.setAttribute("src","https://web.passport.intraders.com.co/index.492f7db7.js")
+    document.head.appendChild(passportjs)
+
+    document.addEventListener("onauth", async () => {
+      this.setSeed()
+      this.seed=window.passport.seed 
+      window.passport = ''
+      this.openWallet()
+    })
   },
   computed: {
     genWalletLink () {

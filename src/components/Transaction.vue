@@ -1,34 +1,7 @@
 <template>
-  <!-- <div class="transaction" :class="type">
-    <div class="type icon" :value="hash" @click="$emit('blockdetails', hash)">
-      <i v-if="type === 'send'" class="fal fa-minus-circle"></i>
-      <i v-else-if="type === 'pending'" class="fal fa-exclamation-circle"></i>
-      <i v-else class="fal fa-plus-circle"></i>
-    </div>
-
-    <div class="innerdetails">
-      <div class="amount">
-        <div :title="rawValue" class="value" v-html="formattedValue"><i class="fal fa-coin"></i>
-        </div>
-
-        <div v-if="type !== 'pending'" class="type">{{ transactionStatus(transaction.type) }}</div>
-
-        <div v-if="type === 'pending'" class="type">
-          <button v-if="privatekey !== null" @click="receive" class="pocket">Click to Receive</button>
-          <div v-else class="">Delivered</div>
-        </div>
-      </div>
-
-      <div class="address">
-        <span @click="link('address',transaction.account)" v-if="type !== 'pending'" v-html="abbreviateAddress(transaction.account) + ' ' + formattedDate"></span>
-        <span @click="link('address',transaction.source)" v-if="type === 'pending'" v-html="abbreviateAddress(transaction.source)"></span>
-      </div>
-    </div>
-  </div> -->
-
-<div class="notification is-dark">
+<div class="notification is-dark" style="overflow-x:scroll">
   <div class="columns level">
-      <div class="column is-2" :value="hash" @click="$emit('blockdetails', hash)">
+      <div class="column is-1" :value="hash" @click="$emit('blockdetails', hash)">
           <div v-if="type === 'send'" class="icon has-text-link">
             <div v-html="iconSvg('minus-square')"></div> 
           </div>
@@ -42,47 +15,23 @@
           </div>
       </div>
 
-      <div class="column is-6">
-          <div class="is-size-7 has-text-weight-bold">{{formattedValue}}
-          </div>
+      <div class="column is-3">
+        <div :title="rawValue" class="value" v-html="formattedValue"><i class="fal fa-coin"></i>
+        </div>
 
-          <div 
-            class="is-size-7" 
-            @click="link('address',transaction.account)" 
-            v-if="type !== 'pending'"
-          >
-            {{abbreviateAddress(transaction.account)}}
-          </div>
+        <div v-if="type !== 'pending'" class="type">{{ transactionStatus(transaction.type) }}</div>
 
-          <div 
-            class="is-size-7" 
-            @click="link('address',transaction.source)" 
-            v-if="type === 'pending'" 
-          >
-            {{abbreviateAddress(transaction.source)}}
-          </div>
-
-          <div 
-            v-if="type === 'pending'" 
-            class="type">
-
-            <button 
-              v-if="privatekey !== null" 
-              @click="receive" 
-              class="pocket">
-              Click to Receive
-            </button>
-
-            <div v-else class="">Delivered</div>
-          </div>
+        <div v-if="type === 'pending'" class="type">
+          <button v-if="privatekey !== null" @click="receive" class="pocket">Click to Receive</button>
+          <div v-else class="">Delivered</div>
+        </div>
       </div>
       
-      <div class="column is-5">
-          <div class="is-size-7 has-text-link has-text-weight-bold" v-if="type !== 'pending'">
-            {{ transactionStatus(transaction.type) }}
-          </div>
-          <div class="is-size-7">{{formattedDate}}
-          </div>
+      <div class="column" style="overflow-x:scroll !important">
+        <p class="is-6">            
+          <span v-if="type !== 'pending'">{{ abbreviateAddress(transaction.account) + ' ' + formattedDate }}</span>
+          <span v-if="type === 'pending'">{{ abbreviateAddress(transaction.source) }}</span>
+        </p>
       </div>
   </div>
 </div>
@@ -146,8 +95,8 @@ export default {
     async receive () {
       if(this.pow === null) {
         this.$notify({
-          title: 'PoW not complete',
-          text: 'Please wait for the status to be ready',
+          title: 'Calculo de PoW incompleto',
+          text: 'Por favor espere que el cálculo termine',
           type: 'error'
         })
       }

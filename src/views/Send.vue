@@ -142,6 +142,7 @@ export default {
         return true
       }
       const qrdata = data.replace('nano:','').split('?')
+      console.log(qrdata)
       this.destination = qrdata[0]
       if (qrdata[1]) {
         qrdata[1].split('&').forEach(function(part) {
@@ -161,8 +162,8 @@ export default {
       this.payloadhash = ''
       if(this.pow === null) {
         this.$notify({
-          title: 'PoW not complete',
-          text: 'Please wait for the status to be ready',
+          title: 'Calculo de PoW incompleto',
+          text: 'Por favor espere que el cálculo termine',
           type: 'error'
         })
       }

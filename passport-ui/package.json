@@ -1,0 +1,30 @@
+{
+  "name": "register",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "start": "parcel index.html --no-cache",
+    "build": "parcel build index.html --no-cache"
+  },
+  "dependencies": {
+    "@thelamer/nanocurrency": "^2.5.1",
+    "@vizuaalog/bulmajs": "^0.12.1",
+    "bulma": "^0.9.3",
+    "bulma-dashboard": "^0.3.2",
+    "bulma-helpers": "^0.4.0",
+    "bulma-toast": "^2.4.1",
+    "bulma-tooltip": "^3.0.2",
+    "chalk-console": "^1.1.0",
+    "console-success": "^1.0.3",
+    "dotenv": "^10.0.0",
+    "feather-icons": "^4.28.0",
+    "jarallax": "^1.12.7",
+    "parcel": "^2.0.0"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.0.0",
+    "cssnano": "^5.0.8",
+    "postcss": "^8.2.15",
+    "sass": "^1.42.1"
+  }
+}

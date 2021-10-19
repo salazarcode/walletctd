@@ -81,7 +81,7 @@ export function initialState () {
     history: [],
     pending: [],
     node: {
-      address: "ctdnode.intraders.com.co",
+      address: "nodo.intraders.com.co",
       port: "",
       path: '',
       auth: null,

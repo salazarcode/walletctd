@@ -77,8 +77,8 @@ export default {
     async changeRep () {
       if(this.pow === null) {
         this.$notify({
-          title: 'PoW not complete',
-          text: 'Please wait for the status to be ready',
+          title: 'Calculo de PoW incompleto',
+          text: 'Por favor espere que el cálculo termine',
           type: 'error'
         })
       }

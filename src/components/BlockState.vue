@@ -1,93 +1,47 @@
 <template>
-        <simplebar v-if="blockstate !== null" id="breakdown">
-          <header class="headingtitle">State Block <span @click="copyToClipboard(hash)" class="value"><i class="fad fa-clone"></i></span><span @click="link('block',hash)" class="value"><i class="fad fa-external-link"></i></span></header>
-          <div class="stateblock block">{{ hash }}</div>
-          <div class="block">
-            <div class="title">Block subtype <span class="subtype value">{{ blockstate.subtype }}</span></div>
-            <div class="label">The type of transaction that created this state block</div>
-          </div>
-          <div class="block">
-            <div class="title">Metadata <span @click="copyToClipboard(metadatahex)" class="value"><i class="fad fa-clone"></i></span><span @click="showmetaform()" v-show="addmeta !== false" class="value"><i class="fal fa-plus-circle"></i> Add Metadata</span><span v-show="addmeta !== true" @click="metalink()" class="value"><i class="fad fa-external-link"></i></span></div>
-            <div v-if="metaform !== false" class="login">
-              <input type="text" v-model="metadata" v-on:keyup.enter="setmeta()" placeholder="THIS IS PERMANENT" id="metadata" :maxlength="metaformmax" name="metadata">
-              <span  @click="setmeta()" class="max metadata-save" v-text="(metaformmax - metadata.length) + ' | SAVE'"></span>
-            </div>
-            <div v-if="showspinner !== false"><i class="fas fa-spinner fa-spin"></i></div>
-            <div class="account" v-text="metadatahex"></div>
-            <div class="account" v-text="metadatautf8"></div>
-           <div class="account" v-show="metadataipfs !== ''" ><a class="account" v-html="metadataipfs" :href="metadataipfs" target="_blank">{{ metadataipfs }}</a></div>
-            <div class="label">Off chain metadata attached to this transaction</div>
-          </div>
-          <div class="block">
-            <div class="title">Account <span @click="copyToClipboard(blockstate.contents.account)" class="value"><i class="fad fa-clone"></i></span><span @click="link('address',blockstate.contents.account)" class="value"><i class="fad fa-external-link"></i></span></div>
-            <div class="account">{{ blockstate.contents.account }}</div>
-            <div class="label">The account represented by this state block</div>
-          </div>
-          <div class="block">
-            <div class="title">Amount <span class="amount value" v-html="formattedValue(blockstate.amount)"></span></div>
-            <div class="raw"><span class="amount_raw">{{ blockstate.amount }}</span> raw</div>
-            <div class="label">The amount of NANO that was sent in this transaction</div>
-          </div>
-          <div class="block">
-            <div class="title">Balance <span class="balance value" v-html="formattedValue(blockstate.balance)"></span></div>
-            <div class="raw"><span class="balance_raw">{{ blockstate.balance }}</span> raw</div>
-            <div class="label">The amount of NANO that was sent in this transaction</div>
-          </div>
-          <div class="block">
-            <div class="title">Representative <span @click="copyToClipboard(blockstate.contents.representative)" class="value"><i class="fad fa-clone"></i></span><span @click="link('address',blockstate.contents.representative)" class="value"><i class="fad fa-external-link"></i></span></div>
-            <div><span class="rep_raw">{{ blockstate.contents.representative }}</span></div>
-            <div class="label">The account's representative</div>
-          </div>
-          <div class="block">
-            <div class="title">Recipient <span @click="copyToClipboard(blockstate.contents.representative)" class="value"><i class="fad fa-clone"></i></span> <span @click="link('address',blockstate.contents.link_as_account)" class="value"><i class="fad fa-external-link"></i></span></div>
-            <div><span class="rec_raw">{{ blockstate.contents.link_as_account }}</span></div>
-            <div class="label">The account that is receiving the transaction</div>
-          </div>
-          <div class="block">
-            <div class="title">Date <span class="value">{{ formattedDate }}</span></div>
-            <div class="label">The date and time this block was discovered (converted to your local time)</div>
-          </div>
-          <div class="block">
-            <div class="title">Previous Block <span @click="link('block',blockstate.contents.previous)" class="value"><i class="fad fa-external-link"></i></span></div>
-            <div>
-              {{ blockstate.contents.previous }}
-            </div>
-            <div class="label">The previous block in this account's chain</div>
-          </div>
-          <div class="block">
-            <div class="title">Link</div>
-            <div>{{ blockstate.contents.link }}</div>
-            <div class="label">The destination address encoded in hex format or the block hash if open</div>
-          </div>
-          <div class="block">
-            <div class="title">Proof of Work</div>
-            <div>{{ blockstate.contents.work }}</div>
-          </div>
-          <div class="block">
-            <div class="title">Signature</div>
-            <div>{{ blockstate.contents.signature }}</div>
-          </div>
-          <div class="block">
-            <div class="title">JSON <span @click="copyToClipboard(JSON.stringify(blockstate))" class="value"><i class="fad fa-clone"></i></span></div>
-            <div class="json">
-              <pre>{{ JSON.stringify(blockstate, null, 4) }}</pre>
-            </div>
-          </div>
+  <div class="container" v-if="blockstate !== null" >
+    <div class="columns">
+      <div class="column is-12">       
+        <div class="block">
+          <div class="title has-text-dark">Hash <span class="subtype value" @click="copyToClipboard(hash)"><i class="fad fa-clone"></i></span></div>
+          <div class="label">{{ hash }}</div>
+        </div> 
+        <div class="block">
+          <div class="title has-text-dark">Envía</div>
+          <div class="account">{{ blockstate.contents.account }}</div>
+        </div>
+        <div class="block">
+          <div class="title has-text-dark">Recibe</div>
+          <div><span class="rec_raw">{{ blockstate.contents.link_as_account }}</span></div>
+        </div>
+        <div class="block">
+          <div class="title has-text-dark">Monto <span class="amount value"></span></div>
+          <div class="raw"><span class="amount_raw">CTD {{ naturalAmount(blockstate.amount) }}</span> raw</div>
+        </div>
+        <div class="block">
+          <div class="title has-text-dark">Fecha <span class="value"></span></div>
+          <div class="raw">{{ formattedDate }}</div>
+        </div>    
+      </div>
   
-        </simplebar>
+
+    
+    </div>
+
+  </div>       
 
 </template>
 
 <script>
 import * as NanoCurrency from '@thelamer/nanocurrency'
 import { serverMixin } from '../mixins/serverMixin.js'
-import simplebar from 'simplebar-vue'
-import 'simplebar/dist/simplebar.min.css'
+//import simplebar from 'simplebar-vue'
+//import 'simplebar/dist/simplebar.min.css'
 
 export default {
   name: 'BlockState',
   components: {
-    simplebar
+    //simplebar
   },
   props: {
     details: {
@@ -121,6 +75,9 @@ export default {
       this.getDetails(this.$route.params.hash)
     }
   },
+  'globals':{
+    'BigInt':true
+  },
   watch: {
     async details (newvalue) {
       if(newvalue !== null) {
@@ -131,6 +88,9 @@ export default {
     }
   },
   methods: {
+    naturalAmount: function(amount){
+       return BigInt(amount) / 1000000000000000000000000000000n;
+    },
     async getDetails(hash) {
       var blockinfo = {
         action: 'block_info',
@@ -223,7 +183,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 #app .page {
-  padding: 30px;
 }
 a {
   text-decoration: none;

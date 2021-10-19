@@ -146,6 +146,10 @@
               </div>
           </div>
 
+          <div id="blockdetails" class="page" :class="{active: blockdetails !== null}" style="position:absolute;height:100%;overflow-x:auto">            
+            <a class="close" v-if="closebutton === true" @click="blockdetails = null"><i class="fal fa-times"></i></a>
+            <block-state :details="blockdetails"></block-state>
+          </div>
 
 
           <div id="send" style="top:0" class="page has-padding-top-60 has-background-dark has-text-white" :class="{active: send !== false}">
@@ -163,110 +167,6 @@
 
       </div>
   </div>
-  <!-- <div class="wallet">
-    <div type="hidden" id="workstorage"></div>
-      <div id="wallet" class="page" :class="{active: open === true}">
-        <div id="powstatus">
-            <div class="status busy" :class="{active: ready === false}">Calculating Work <i class="fas fa-spinner fa-spin"></i></div>
-            <div class="status ready" :class="{active: ready === true}">Ready <i class="fas fa-check"></i></div>
-        </div>
-
-        <div class="inner">
-          <div class="block">
-            <div class="headingtitle top">
-              <span id="closewallet" class="" @click="logout"><i class="fal fa-sign-out fa-flip-horizontal"></i></span>
-              <span>Wallet</span>
-              <span class="refresh rotate" @click="refresh" :class="{ down: isActive }"><i class="fal fa-sync"></i></span>
-              <div class="lastrefresh">Last Refresh: {{ lastrefresh.toLocaleTimeString() }}</div>
-            </div>
-
-            <simplebar class="block pending">
-              <div id="output">
-                <div class="balance">
-                  <div @click="copyToClipboard(address)" :class="{ active: balanceextra }" class="raw">{{ address }}</div>
-                  <div class="value" v-html="abbreviateNumber(balance)"></div>
-                  <div class="raw" :class="{ active: balanceextra }">{{ balance }}</div>
-                  <a class="balanceextra" href="" @click.prevent="balanceextra = !balanceextra"><i data-fa-transform="grow-20" class="fal fa-ellipsis-h"></i></a>
-                </div>
-              </div>
-
-              <div class="headingtitle showmobile">History</div>
-
-              <transaction
-                v-for="(transaction, index) in pending"
-                :key="index"
-                :index="index"
-                :transaction="transaction"
-                v-on:blockdetails="blockdetails = $event"
-                type="pending"
-                @receive="refreshDetails"
-              ></transaction>
-            </simplebar>
-          </div>
-
-          <simplebar class="block history">
-            <div class="headingtitle hidemobile">History</div>
-
-            <transaction
-              v-for="(transaction, index) in history"
-              :key="index"
-              :index="index"
-              :transaction="transaction"
-              v-on:blockdetails="blockdetails = $event"
-              :type="transaction.type"
-            ></transaction>
-          </simplebar>
-        </div>
-
-        <div id="walletmenu" class="menu">
-          <div class="bg"></div>
-
-          <div class="content">
-            <div class="tab" data-tab="#receive" @click="receive = true">
-              <span class="menuicon"><i data-fa-transform="grow-8" class="fal fa-wallet"></i></span>
-              <span>Receive</span>
-            </div>
-
-            <div class="tab" data-tab="#send" @click="send = true">
-              <span class="menuicon"><i data-fa-transform="grow-8" class="fal fa-coins"></i></span>
-              <span>Send</span>
-            </div>
-
-            <div class="tab" data-tab="#settings" @click="settings = true">
-              <span class="menuicon"><i data-fa-transform="grow-8" class="fal fa-cog"></i></span>
-              <span>Settings</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="send" class="page" :class="{active: send !== false}">
-        <a class="close" v-if="closebutton === true" @click="send = false"><i class="fal fa-times"></i></a>
-        <send :open="send" @close="send = false"></send>
-      </div>
-      <div id="settings" class="page" :class="{active: settings !== false}">
-        <a class="close" v-if="closebutton === true" @click="settings = false"><i class="fal fa-times"></i></a>
-        <settings
-          :open="settings"
-          :representative="representative"
-          @change="repChange"
-        ></settings>
-      </div>
-      <div id="receive" class="page" :class="{active: receive !== false}">
-        <a class="close" v-if="closebutton === true" @click="receive = false"><i class="fal fa-times"></i></a>
-        <receive
-          :address="address"
-        ></receive>
-      </div>
-      <div id="blockdetails" class="page" :class="{active: blockdetails !== null}">
-        <a class="close" v-if="closebutton === true" @click="blockdetails = null"><i class="fal fa-times"></i></a>
-        <block-state :details="blockdetails"></block-state>
-      </div>
-      <div class="page" style="z-index: 9;" :class="{active: aboutphrase !== false}">
-        <a class="close" @click="closePhrasefile"><i class="fal fa-times"></i></a>
-        <p>Before you use this method to login to your wallet you should have a firm grasp on what is happening on the backend. This login method will shasum a file or a phrase or the combination of the two sums and use that as the seed for your account. In general human beings are incapable of creating a cryptographically secure phrases which is why BIP39 exists, at the least you should use a file + phrase to login using this method. Please also generate a paper wallet from Generate Wallet or write down your seed somewhere. While using this method have the underlying expectation that the funds using this seed have a chance to be stolen and only ever use it for small daily transactional amounts.</p>
-      </div>
-
-  </div> -->
 </template>
 
 <script>
@@ -275,13 +175,13 @@ import Transaction from '@/components/Transaction.vue'
 import Send from '@/views/Send.vue'
 import Receive from '@/views/Receive.vue'
 // import Settings from '@/views/Settings.vue'
-// import BlockState from '@/components/BlockState.vue'
-// import simplebar from 'simplebar-vue';
+import BlockState from '@/components/BlockState.vue'
+//import simplebar from 'simplebar-vue';
 import { serverMixin } from '../mixins/serverMixin.js'
 import * as webglpow from '../mixins/webgl-pow.js'
 import * as NanoCurrency from '@thelamer/nanocurrency'
 import Worker from 'worker-loader!./../mixins/pow.js'
-import 'simplebar/dist/simplebar.min.css';
+//import 'simplebar/dist/simplebar.min.css';
 
 const feather = require('feather-icons')
 import Lottie from 'vue-lottie/src/lottie.vue'
@@ -336,8 +236,8 @@ export default {
     Send,
     Receive,
     // Settings,
-    // BlockState,
-    // simplebar
+    BlockState,
+    //simplebar
   
   },
   mixins: [ serverMixin ],
@@ -471,6 +371,7 @@ export default {
         workerList[workerIndex].terminate();
       }
       this.$router.push("/");
+      window.location.reload();
     },
     refresh () {
       this.isActive = !this.isActive
@@ -481,7 +382,8 @@ export default {
       if('frontier' in this.details) {
         current = this.details.frontier
       }
-      try {
+      try 
+      {
         await this.getDetails(this.privatekey)
         this.lastrefresh = new Date()
         if(current !== this.details.frontier || open === true) {
@@ -627,3 +529,13 @@ export default {
 }
 </script>
 
+<style scoped>
+  #blockdetails{
+    position: absolute;
+    height: 100%;
+    background-color: white;
+    opacity: 0.9;
+    color: black !important;
+    overflow: auto;
+  }
+</style>

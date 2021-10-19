@@ -42,6 +42,9 @@
   },
   "eslintConfig": {
     "root": true,
+    "globals":{
+      "BigInt":true
+    },
     "env": {
       "node": true
     },

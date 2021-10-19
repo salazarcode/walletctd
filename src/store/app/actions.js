@@ -111,6 +111,7 @@ export async function getDetails (context, address) {
     account: address
   }
   const details = await rpCall(context, info)
+  console.log(JSON.stringify(info));
   return details
 }
 
